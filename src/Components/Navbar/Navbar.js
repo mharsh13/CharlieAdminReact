@@ -3,6 +3,7 @@ import { Navbar, Nav } from "react-bootstrap";
 import classes from "./Navbar.css";
 import { withRouter } from "react-router";
 import { FaEnvelope, FaBars, FaBell, FaSignOutAlt } from "react-icons/fa";
+import logo from "../../Images/Logo2.png";
 
 const navbar = (props) => {
   const { location } = props;
@@ -13,11 +14,7 @@ const navbar = (props) => {
     attachedClass = [classes.Navbar, classes.Close];
   }
   return (
-    <Navbar
-      expand="md"
-      variant="dark"
-      className={attachedClass.join(" ")}
-    >
+    <Navbar expand="md" variant="dark" className={attachedClass.join(" ")}>
       <FaBars
         onClick={props.click}
         size="1.2rem"
@@ -26,7 +23,14 @@ const navbar = (props) => {
       />
 
       <Navbar.Brand style={{ textDecoration: "none", display: "flex" }}>
-        <div style={{ padding: "0px 30px" }}>Charlie - Admin Portal</div>
+        <img
+          alt="logo"
+          src={logo}
+          height="25px"
+          style={{
+            margin: "2px 30px",
+          }}
+        />
       </Navbar.Brand>
       <Nav className="ml-auto" activeKey={location.pathname}>
         <FaEnvelope
