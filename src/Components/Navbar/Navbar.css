@@ -1,5 +1,13 @@
-.Toolbar {
+.Navbar {
     background-color: #152937;
     font-family: "Poppins";
+    transition: transform 0.3s ease-out;
+    z-index: 1;
+  }
+.Open{
+      transform: translateX(280px);
   }
   
+  .Close{
+      transform: translateX(0%);
+  }

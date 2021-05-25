@@ -1,31 +1,50 @@
 import React from "react";
-import { Navbar } from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 import classes from "./Navbar.css";
 import { withRouter } from "react-router";
-import { FaBars } from "react-icons/fa";
+import { FaEnvelope, FaBars, FaBell, FaSignOutAlt } from "react-icons/fa";
 
 const navbar = (props) => {
+  const { location } = props;
+  let attachedClass = [classes.Navbar, classes.Close];
+  if (props.sideBarStatus) {
+    attachedClass = [classes.Navbar, classes.Open];
+  } else {
+    attachedClass = [classes.Navbar, classes.Close];
+  }
   return (
     <Navbar
-      collapseOnSelect
       expand="md"
       variant="dark"
-      className={classes.Toolbar}
-      fixed="top"
+      className={attachedClass.join(" ")}
     >
       <FaBars
-        onClick={() => {}}
+        onClick={props.click}
         size="1.2rem"
         color="white"
-      ></FaBars>
+        style={{ cursor: "pointer" }}
+      />
 
-      <Navbar.Brand
-        href="/"
-        style={{ textDecoration: "none", display: "flex" }}
-      >
-        <div style={{ padding: "0px 40px" }}>Charlie - Admin Portal</div>
+      <Navbar.Brand style={{ textDecoration: "none", display: "flex" }}>
+        <div style={{ padding: "0px 30px" }}>Charlie - Admin Portal</div>
       </Navbar.Brand>
-      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      <Nav className="ml-auto" activeKey={location.pathname}>
+        <FaEnvelope
+          size="1.2rem"
+          color="white"
+          style={{ cursor: "pointer", margin: "0px 10px" }}
+        />
+        <FaBell
+          size="1.2rem"
+          color="white"
+          style={{ cursor: "pointer", margin: "0px 10px" }}
+        />
+        <FaSignOutAlt
+          size="1.2rem"
+          color="white"
+          style={{ cursor: "pointer", margin: "0px 10px" }}
+        />
+      </Nav>
     </Navbar>
   );
 };
