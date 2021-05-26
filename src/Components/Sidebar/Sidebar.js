@@ -110,145 +110,159 @@ const Sidebar = (props) => {
             </Col>
           </Row>
         </Link>
+        <Link to="/brands">
+          <Row
+            className="justify-content-md-center"
+            style={{ paddingLeft: "20px", paddingBottom: "10px" }}
+          >
+            <Col md="auto">
+              <FaFlag
+                size="1.2rem"
+                color={location.pathname === "/brands" ? "#fdae26" : "white"}
+                style={{ cursor: "pointer" }}
+              />
+            </Col>
+            <Col>
+              <div
+                style={{
+                  cursor: "pointer",
+                  color: location.pathname === "/brands" ? "#fdae26" : "white",
+                }}
+              >
+                Brands
+              </div>
+            </Col>
+          </Row>
+        </Link>
+        <Link to="/products">
+          <Row
+            className="justify-content-md-center"
+            style={{ paddingLeft: "20px", paddingBottom: "10px" }}
+          >
+            <Col md="auto">
+              <FaTshirt
+                size="1.2rem"
+                color={location.pathname === "/products" ? "#fdae26" : "white"}
+                style={{ cursor: "pointer" }}
+              />
+            </Col>
+            <Col>
+              <div
+                style={{
+                  cursor: "pointer",
+                  color:
+                    location.pathname === "/products" ? "#fdae26" : "white",
+                }}
+              >
+                Products
+              </div>
+            </Col>
+          </Row>
+        </Link>
 
-        <Row
-          className="justify-content-md-center"
-          style={{ paddingLeft: "20px", paddingBottom: "10px" }}
-        >
-          <Col md="auto">
-            <FaFlag
-              size="1.2rem"
-              color={location.pathname === "/brands" ? "#fdae26" : "white"}
-              style={{ cursor: "pointer" }}
-            />
-          </Col>
-          <Col>
-            <div
-              style={{
-                cursor: "pointer",
-                color: location.pathname === "/brands" ? "#fdae26" : "white",
-              }}
-            >
-              Brands
-            </div>
-          </Col>
-        </Row>
-        <Row
-          className="justify-content-md-center"
-          style={{ paddingLeft: "20px", paddingBottom: "10px" }}
-        >
-          <Col md="auto">
-            <FaTshirt
-              size="1.2rem"
-              color={location.pathname === "/products" ? "#fdae26" : "white"}
-              style={{ cursor: "pointer" }}
-            />
-          </Col>
-          <Col>
-            <div
-              style={{
-                cursor: "pointer",
-                color: location.pathname === "/products" ? "#fdae26" : "white",
-              }}
-            >
-              Products
-            </div>
-          </Col>
-        </Row>
         <hr
           style={{
             backgroundColor: "white",
             margin: "0px 0px 10px 0px",
           }}
         ></hr>
-        <Row
-          className="justify-content-md-center"
-          style={{ paddingLeft: "20px", paddingBottom: "10px" }}
-        >
-          <Col md="auto">
-            <FaShoppingCart
-              size="1.2rem"
-              color={location.pathname === "/orders" ? "#fdae26" : "white"}
-              style={{ cursor: "pointer" }}
-            />
-          </Col>
-          <Col>
-            <div
-              style={{
-                cursor: "pointer",
-                color: location.pathname === "/orders" ? "#fdae26" : "white",
-              }}
-            >
-              Orders
-            </div>
-          </Col>
-        </Row>
-        <Row
-          className="justify-content-md-center"
-          style={{ paddingLeft: "20px", paddingBottom: "10px" }}
-        >
-          <Col md="auto">
-            <FaImage
-              size="1.2rem"
-              color={location.pathname === "/banners" ? "#fdae26" : "white"}
-              style={{ cursor: "pointer" }}
-            />
-          </Col>
-          <Col>
-            <div
-              style={{
-                cursor: "pointer",
-                color: location.pathname === "/banners" ? "#fdae26" : "white",
-              }}
-            >
-              Banners
-            </div>
-          </Col>
-        </Row>
-        <Row
-          className="justify-content-md-center"
-          style={{ paddingLeft: "20px", paddingBottom: "10px" }}
-        >
-          <Col md="auto">
-            <FaUserAlt
-              size="1.2rem"
-              color={location.pathname === "/users" ? "#fdae26" : "white"}
-              style={{ cursor: "pointer" }}
-            />
-          </Col>
-          <Col>
-            <div
-              style={{
-                cursor: "pointer",
-                color: location.pathname === "/users" ? "#fdae26" : "white",
-              }}
-            >
-              User Manangement
-            </div>
-          </Col>
-        </Row>
-        <Row
-          className="justify-content-md-center"
-          style={{ paddingLeft: "20px", paddingBottom: "10px" }}
-        >
-          <Col md="auto">
-            <FaEnvelope
-              size="1.2rem"
-              color={location.pathname === "/chats" ? "#fdae26" : "white"}
-              style={{ cursor: "pointer" }}
-            />
-          </Col>
-          <Col>
-            <div
-              style={{
-                cursor: "pointer",
-                color: location.pathname === "/chats" ? "#fdae26" : "white",
-              }}
-            >
-              Customer Messages
-            </div>
-          </Col>
-        </Row>
+
+        <Link to="/orders">
+          <Row
+            className="justify-content-md-center"
+            style={{ paddingLeft: "20px", paddingBottom: "10px" }}
+          >
+            <Col md="auto">
+              <FaShoppingCart
+                size="1.2rem"
+                color={location.pathname === "/orders" ? "#fdae26" : "white"}
+                style={{ cursor: "pointer" }}
+              />
+            </Col>
+            <Col>
+              <div
+                style={{
+                  cursor: "pointer",
+                  color: location.pathname === "/orders" ? "#fdae26" : "white",
+                }}
+              >
+                Orders
+              </div>
+            </Col>
+          </Row>
+        </Link>
+        <Link to="/banners">
+          <Row
+            className="justify-content-md-center"
+            style={{ paddingLeft: "20px", paddingBottom: "10px" }}
+          >
+            <Col md="auto">
+              <FaImage
+                size="1.2rem"
+                color={location.pathname === "/banners" ? "#fdae26" : "white"}
+                style={{ cursor: "pointer" }}
+              />
+            </Col>
+            <Col>
+              <div
+                style={{
+                  cursor: "pointer",
+                  color: location.pathname === "/banners" ? "#fdae26" : "white",
+                }}
+              >
+                Banners
+              </div>
+            </Col>
+          </Row>
+        </Link>
+        <Link to="/users">
+          <Row
+            className="justify-content-md-center"
+            style={{ paddingLeft: "20px", paddingBottom: "10px" }}
+          >
+            <Col md="auto">
+              <FaUserAlt
+                size="1.2rem"
+                color={location.pathname === "/users" ? "#fdae26" : "white"}
+                style={{ cursor: "pointer" }}
+              />
+            </Col>
+            <Col>
+              <div
+                style={{
+                  cursor: "pointer",
+                  color: location.pathname === "/users" ? "#fdae26" : "white",
+                }}
+              >
+                User Manangement
+              </div>
+            </Col>
+          </Row>
+        </Link>
+        <Link to="/chats">
+          <Row
+            className="justify-content-md-center"
+            style={{ paddingLeft: "20px", paddingBottom: "10px" }}
+          >
+            <Col md="auto">
+              <FaEnvelope
+                size="1.2rem"
+                color={location.pathname === "/chats" ? "#fdae26" : "white"}
+                style={{ cursor: "pointer" }}
+              />
+            </Col>
+            <Col>
+              <div
+                style={{
+                  cursor: "pointer",
+                  color: location.pathname === "/chats" ? "#fdae26" : "white",
+                }}
+              >
+                Customer Messages
+              </div>
+            </Col>
+          </Row>
+        </Link>
       </Container>
     </div>
   );

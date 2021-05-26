@@ -1,0 +1,39 @@
+.Form {
+    border-color: #004472;
+  }
+  
+  .Button {
+    width: 200px;
+  }
+  
+  .customfileinput input {
+    visibility: hidden;
+    width: 100px;
+  }
+  .customfileinput:before {
+    content: "Upload Image";
+    display: flex;
+    background-color: #004472;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 20px;
+    outline: none;
+    cursor: pointer;
+    color: white;
+    text-align: center;
+    font-size: 0.8rem;
+  }
+  .customfileinput:hover:before {
+    background-color: #00395f;
+    border-color: #004472;
+  }
+  .customfileinput:active:before {
+    background: #004472;
+  }
+  
+  .ProgressBar {
+    height: 5px;
+    background-color: #00395f;
+    margin: 10px 0px 40px 0px;
+  }
+  

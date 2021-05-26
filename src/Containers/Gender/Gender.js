@@ -1,9 +1,11 @@
 import React from "react";
+import GenderUpload from "../../Components/UploadForms/GenderUpload";
+import classes from "./Gender.css";
 
 const Gender = () => {
   return (
-    <div>
-      <h1>This is Gender</h1>
+    <div className={classes.Gender}>
+      <GenderUpload></GenderUpload>
     </div>
   );
 };
