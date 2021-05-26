@@ -1,9 +1,11 @@
 import React from "react";
+import CategoryUpload from "../../Components/UploadForms/CategoryUpload";
+import classes from "./Categories.css"
 
 const Categories= () => {
   return (
-    <div>
-      <h1>This is Categories</h1>
+    <div className={classes.Categories}>
+    <CategoryUpload></CategoryUpload>
     </div>
   );
 };
