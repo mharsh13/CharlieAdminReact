@@ -10,6 +10,7 @@
     box-sizing: border-box;
     font-family: "Poppins";
     transition: transform 0.3s ease-out;
+    color: white;
   }
   
   .Open{
@@ -17,7 +18,7 @@
   }
   
   .Close{
-      transform: translateX(-80%);
+      transform: translateX(-100%);
   }
 
   .Title{
@@ -25,5 +26,5 @@
       text-align: center;
       padding-top: 20px;
       font-size: 1.2rem;
-      padding-bottom: 5px;
+      padding-bottom: 13px;
   }
