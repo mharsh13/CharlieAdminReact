@@ -13,9 +13,10 @@ import {
   FaUserAlt,
 } from "react-icons/fa";
 import { withRouter } from "react-router";
+import { Link } from "react-router-dom";
 
 const Sidebar = (props) => {
-  const { location, history } = props;
+  const { location } = props;
   let attachedClass = [classes.Sidebar, classes.Close];
   if (props.open) {
     attachedClass = [classes.Sidebar, classes.Open];
@@ -34,89 +35,85 @@ const Sidebar = (props) => {
         }}
       ></hr>
       <Container style={{ marginTop: "20px" }}>
-        <Row
-          className="justify-content-md-center"
-          style={{ paddingLeft: "20px", paddingBottom: "10px" }}
-          onClick={() => {
-            history.push("/");
-          }}
-        >
-          <Col md="auto">
-            <FaThLarge
-              size="1.2rem"
-              color={location.pathname === "/" ? "#fdae26" : "white"}
-              style={{ cursor: "pointer" }}
-            />
-          </Col>
-          <Col>
-            <div
-              style={{
-                cursor: "pointer",
-                color: location.pathname === "/" ? "#fdae26" : "white",
-              }}
-            >
-              Dashboard
-            </div>
-          </Col>
-        </Row>
+        <Link to="/">
+          <Row
+            className="justify-content-md-center"
+            style={{ paddingLeft: "20px", paddingBottom: "10px" }}
+          >
+            <Col md="auto">
+              <FaThLarge
+                size="1.2rem"
+                color={location.pathname === "/" ? "#fdae26" : "white"}
+                style={{ cursor: "pointer" }}
+              />
+            </Col>
+            <Col>
+              <div
+                style={{
+                  cursor: "pointer",
+                  color: location.pathname === "/" ? "#fdae26" : "white",
+                }}
+              >
+                Dashboard
+              </div>
+            </Col>
+          </Row>
+        </Link>
+        <Link to="/gender">
+          <Row
+            className="justify-content-md-center"
+            style={{ paddingLeft: "20px", paddingBottom: "10px" }}
+          >
+            <Col md="auto">
+              <FaVenusMars
+                size="1.2rem"
+                color={location.pathname === "/gender" ? "#fdae26" : "white"}
+                style={{ cursor: "pointer" }}
+              />
+            </Col>
+            <Col>
+              <div
+                style={{
+                  cursor: "pointer",
+                  color: location.pathname === "/gender" ? "#fdae26" : "white",
+                }}
+              >
+                Male/Female
+              </div>
+            </Col>
+          </Row>
+        </Link>
+        <Link to="/categories">
+          <Row
+            className="justify-content-md-center"
+            style={{ paddingLeft: "20px", paddingBottom: "10px" }}
+          >
+            <Col md="auto">
+              <FaStar
+                size="1.2rem"
+                color={
+                  location.pathname === "/categories" ? "#fdae26" : "white"
+                }
+                style={{ cursor: "pointer" }}
+              />
+            </Col>
+            <Col>
+              <div
+                style={{
+                  cursor: "pointer",
+                  color:
+                    location.pathname === "/categories" ? "#fdae26" : "white",
+                }}
+              >
+                Categories
+              </div>
+            </Col>
+          </Row>
+        </Link>
 
         <Row
           className="justify-content-md-center"
           style={{ paddingLeft: "20px", paddingBottom: "10px" }}
-          onClick={() => {
-            history.push("/gender");
-          }}
-        >
-          <Col md="auto">
-            <FaVenusMars
-              size="1.2rem"
-              color={location.pathname === "/gender" ? "#fdae26" : "white"}
-              style={{ cursor: "pointer" }}
-            />
-          </Col>
-          <Col>
-            <div
-              style={{
-                cursor: "pointer",
-                color: location.pathname === "/gender" ? "#fdae26" : "white",
-              }}
-            >
-              Male/Female
-            </div>
-          </Col>
-        </Row>
-        <Row
-          className="justify-content-md-center"
-          style={{ paddingLeft: "20px", paddingBottom: "10px" }}
-          onClick={() => {
-            history.push("/categories");
-          }}
-        >
-          <Col md="auto">
-            <FaStar
-              size="1.2rem"
-              color={location.pathname === "/categories" ? "#fdae26" : "white"}
-              style={{ cursor: "pointer" }}
-            />
-          </Col>
-          <Col>
-            <div
-              style={{
-                cursor: "pointer",
-                color:
-                  location.pathname === "/categories" ? "#fdae26" : "white",
-              }}
-            >
-              Categories
-            </div>
-          </Col>
-        </Row>
-        <Row
-          className="justify-content-md-center"
-          style={{ paddingLeft: "20px", paddingBottom: "10px" }}
-          onClick={() => {
-            history.push("/brands");
-          }}
         >
           <Col md="auto">
             <FaFlag
@@ -139,9 +136,6 @@ const Sidebar = (props) => {
         <Row
           className="justify-content-md-center"
           style={{ paddingLeft: "20px", paddingBottom: "10px" }}
-          onClick={() => {
-            history.push("/products");
-          }}
         >
           <Col md="auto">
             <FaTshirt
@@ -170,9 +164,6 @@ const Sidebar = (props) => {
         <Row
           className="justify-content-md-center"
           style={{ paddingLeft: "20px", paddingBottom: "10px" }}
-          onClick={() => {
-            history.push("/orders");
-          }}
         >
           <Col md="auto">
             <FaShoppingCart
@@ -195,9 +186,6 @@ const Sidebar = (props) => {
         <Row
           className="justify-content-md-center"
           style={{ paddingLeft: "20px", paddingBottom: "10px" }}
-          onClick={() => {
-            history.push("/banners");
-          }}
         >
           <Col md="auto">
             <FaImage
@@ -220,9 +208,6 @@ const Sidebar = (props) => {
         <Row
           className="justify-content-md-center"
           style={{ paddingLeft: "20px", paddingBottom: "10px" }}
-          onClick={() => {
-            history.push("/users");
-          }}
         >
           <Col md="auto">
             <FaUserAlt
@@ -245,9 +230,6 @@ const Sidebar = (props) => {
         <Row
           className="justify-content-md-center"
           style={{ paddingLeft: "20px", paddingBottom: "10px" }}
-          onClick={() => {
-            history.push("/chats");
-          }}
         >
           <Col md="auto">
             <FaEnvelope

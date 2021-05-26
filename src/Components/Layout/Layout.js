@@ -10,11 +10,18 @@ const Layout = (props) => {
     setSideBar(!sideBar);
   };
 
+  let attachedClass = [classes.content, classes.Close];
+  if (sideBar) {
+    attachedClass = [classes.content, classes.Open];
+  } else {
+    attachedClass = [classes.content, classes.Close];
+  }
+
   return (
     <React.Fragment>
       <Navbar click={toggleSidebar} sideBarStatus={sideBar} />
       <Sidebar open={sideBar}></Sidebar>
-      <main className={classes.content}>{props.children}</main>
+      <main className={attachedClass.join(" ")}>{props.children}</main>
     </React.Fragment>
   );
 };

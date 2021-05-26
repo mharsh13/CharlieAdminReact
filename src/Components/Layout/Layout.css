@@ -1,3 +1,13 @@
 .content{
-    margin-top: 80px;
+    margin-top: 20px;
+    font-family: "Poppins";
+    transition: transform 0.3s ease-out;
+}
+
+.Open{
+    transform: translateX(280px);
+}
+
+.Close{
+    transform: translateX(0%);
 }
