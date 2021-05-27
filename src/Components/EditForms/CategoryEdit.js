@@ -9,7 +9,7 @@ import {
   timestamp,
 } from "../../firebase/config";
 
-const GenderEdit = (props) => {
+const CategoryEdit = (props) => {
   const [validated, setValidated] = useState(false);
   const [image, setImage] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
@@ -30,11 +30,11 @@ const GenderEdit = (props) => {
       setLoading(true);
 
       const collectionRef = projectFirestore
-        .collection("gender")
+        .collection("categories")
         .doc(props.doc.id);
       if (image != null) {
         const uploadTask = projectStorage
-          .ref(`Gender/${image.name}`)
+          .ref(`Category/${image.name}`)
           .put(image);
         uploadTask.on(
           "state_changed",
@@ -48,16 +48,16 @@ const GenderEdit = (props) => {
           },
           () => {
             projectStorage
-              .ref("Gender")
+              .ref("Category")
               .child(image.name)
               .getDownloadURL()
               .then((url) => {
-                const gender = {
-                  GenderName: event.target.name.value,
+                const category = {
+                  CategoryName: event.target.name.value,
                   ImageUrl: url,
                   Date: timestamp(),
                 };
-                collectionRef.update({ gender });
+                collectionRef.update({ category });
                 setLoading(false);
                 setImage(null);
                 setUploadedImage(null);
@@ -70,12 +70,12 @@ const GenderEdit = (props) => {
           }
         );
       } else {
-        const gender = {
-          GenderName: event.target.name.value,
-          ImageUrl: props.doc.gender.ImageUrl,
+        const category = {
+          CategoryName: event.target.name.value,
+          ImageUrl: props.doc.category.ImageUrl,
           Date: timestamp(),
         };
-        collectionRef.update({ gender });
+        collectionRef.update({ category });
         setLoading(false);
         setImage(null);
         setUploadedImage(null);
@@ -139,7 +139,7 @@ const GenderEdit = (props) => {
           required
           className={classes.Form}
           defaultValue={
-            props.doc == null ? "Loading" : props.doc.gender.GenderName
+            props.doc == null ? "Loading" : props.doc.category.CategoryName
           }
         />
         <Form.Control.Feedback type="invalid">
@@ -243,4 +243,4 @@ const GenderEdit = (props) => {
   );
 };
 
-export default GenderEdit;
+export default CategoryEdit;

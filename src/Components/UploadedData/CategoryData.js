@@ -10,21 +10,21 @@ import {
   Spinner,
 } from "react-bootstrap";
 import { projectFirestore } from "../../firebase/config";
-import GenderEdit from "../EditForms/GenderEdit";
+import CategoryEdit from "../EditForms/CategoryEdit";
 
-const GenderData = () => {
+const CategoryData = () => {
   const [docs, setDocs] = useState([]);
   const [showDeleteModal, setDeleteModal] = useState(false);
   const [showEditModal, setEditModal] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [isLoading, setLoading] = useState(false);
-  const [selectedGender,setGender]=useState(null);
+  const [selectedCategory,setCategory]=useState(null);
 
   useEffect(() => {
-      setLoading(true);
+    setLoading(true);
     const unsub = projectFirestore
-      .collection("gender")
-      .orderBy("gender.Date", "desc")
+      .collection("categories")
+      .orderBy("category.Date", "desc")
       .onSnapshot((snap) => {
         let documents = [];
         snap.forEach((doc) => {
@@ -33,7 +33,6 @@ const GenderData = () => {
         setDocs(documents);
         setLoading(false);
       });
-     
     return () => unsub();
   }, []);
 
@@ -41,7 +40,7 @@ const GenderData = () => {
     setLoading(true);
     setDeleteModal(false);
     projectFirestore
-      .collection("gender")
+      .collection("categories")
       .doc(selectedId)
       .delete()
       .then((res) => {
@@ -94,7 +93,7 @@ const GenderData = () => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <GenderEdit doc={selectedGender} onSave={closeEditModal}></GenderEdit>
+          <CategoryEdit doc={selectedCategory} onSave={closeEditModal}></CategoryEdit>
         </Modal.Body>
       </Modal>
     );
@@ -114,22 +113,22 @@ const GenderData = () => {
                 <Card style={{ margin: "10px" }} className="text-right">
                   <Card.Img
                     variant="top"
-                    src={doc.gender.ImageUrl}
+                    src={doc.category.ImageUrl}
                     style={{ height: "150px", objectFit: "cover" }}
                   />
 
                   <Card.Body>
                     <Card.Title className="text-left">
-                      {doc.gender.GenderName}
+                      {doc.category.CategoryName}
                     </Card.Title>
                     <Card.Link
                       onClick={() => {
                         setEditModal(true);
                         setSelectedId(doc.id);
 
-                        docs.forEach((gen)=>{
-                            if(gen.id===doc.id){
-                                setGender(gen);
+                        docs.forEach((cat)=>{
+                            if(cat.id===doc.id){
+                                setCategory(cat);
                             }
                         })
                       }}
@@ -174,4 +173,4 @@ const GenderData = () => {
   );
 };
 
-export default GenderData;
+export default CategoryData;
