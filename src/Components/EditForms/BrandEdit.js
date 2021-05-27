@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Spinner, Toast } from "react-bootstrap";
 import imageCompression from "browser-image-compression";
-import classes from "./UploadForm.css";
+import classes from "./EditForm.css";
 import { motion } from "framer-motion";
 import {
   projectStorage,
@@ -9,7 +9,7 @@ import {
   timestamp,
 } from "../../firebase/config";
 
-const BrandUpload = () => {
+const BrandEdit = (props) => {
   const [validated, setValidated] = useState(false);
   const [image, setImage] = useState(null);
   const [uploadedImage, setUploadedImage] = useState(null);
@@ -28,42 +28,63 @@ const BrandUpload = () => {
       setValidated(true);
       event.preventDefault();
       setLoading(true);
-      const collectionRef = projectFirestore.collection("brands");
-      const uploadTask = projectStorage
-        .ref(`Brand/${image.name}`)
-        .put(image);
-      uploadTask.on(
-        "state_changed",
-        (snap) => {
-          let percentage = (snap.bytesTransferred / snap.totalBytes) * 100;
-          setProgress(percentage);
-        },
-        (error) => {
-          console.log(error);
-          setError(true);
-        },
-        () => {
-          projectStorage
-            .ref("Brand")
-            .child(image.name)
-            .getDownloadURL()
-            .then((url) => {
-              const brand = {
-                BrandName: event.target.name.value,
-                ImageUrl: url,
-                Date: timestamp(),
-              };
-              collectionRef.add({ brand });
-              setLoading(false);
-              setImage(null);
-              setUploadedImage(null);
-              setProgress(0);
-              showToast();
-              form.reset();
-              setValidated(false);
-            });
-        }
-      );
+
+      const collectionRef = projectFirestore
+        .collection("brands")
+        .doc(props.doc.id);
+      if (image != null) {
+        const uploadTask = projectStorage
+          .ref(`Brand/${image.name}`)
+          .put(image);
+        uploadTask.on(
+          "state_changed",
+          (snap) => {
+            let percentage = (snap.bytesTransferred / snap.totalBytes) * 100;
+            setProgress(percentage);
+          },
+          (error) => {
+            console.log(error);
+            setError(true);
+          },
+          () => {
+            projectStorage
+              .ref("Brand")
+              .child(image.name)
+              .getDownloadURL()
+              .then((url) => {
+                const category = {
+                  CategoryName: event.target.name.value,
+                  ImageUrl: url,
+                  Date: timestamp(),
+                };
+                collectionRef.update({ category });
+                setLoading(false);
+                setImage(null);
+                setUploadedImage(null);
+                setProgress(0);
+                showToast();
+                form.reset();
+                setValidated(false);
+                props.onSave();
+              });
+          }
+        );
+      } else {
+        const brand = {
+          BrandName: event.target.name.value,
+          ImageUrl: props.doc.brand.ImageUrl,
+          Date: timestamp(),
+        };
+        collectionRef.update({ brand });
+        setLoading(false);
+        setImage(null);
+        setUploadedImage(null);
+        setProgress(0);
+        showToast();
+        form.reset();
+        setValidated(false);
+        props.onSave();
+      }
     }
     setValidated(true);
   };
@@ -111,12 +132,15 @@ const BrandUpload = () => {
       onSubmit={!isLoading ? handleSubmit : null}
     >
       <Form.Group controlId="name">
-        <Form.Label>Enter Brand</Form.Label>
+        <Form.Label>Enter Gender Category</Form.Label>
         <Form.Control
           type="text"
           placeholder="Enter Name"
           required
           className={classes.Form}
+          defaultValue={
+            props.doc == null ? "Loading" : props.doc.brand.BrandName
+          }
         />
         <Form.Control.Feedback type="invalid">
           Please enter a brand name.
@@ -167,7 +191,7 @@ const BrandUpload = () => {
           disabled={isLoading}
           className={classes.Button}
         >
-          {isLoading ? "Loading…" : "Submit"}
+          {isLoading ? "Loading…" : "Save Changes"}
         </Button>
       </div>
 
@@ -189,7 +213,7 @@ const BrandUpload = () => {
               top: 20,
             }}
           >
-            <Toast.Body>Category Uploaded Successfully!</Toast.Body>
+            <Toast.Body>Brand Updated Successfully!</Toast.Body>
           </Toast>
         </motion.div>
       )}
@@ -219,4 +243,4 @@ const BrandUpload = () => {
   );
 };
 
-export default BrandUpload;
+export default BrandEdit;
