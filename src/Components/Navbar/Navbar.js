@@ -34,6 +34,8 @@ const navbar = (props) => {
           }}
         />
       </Navbar.Brand>
+      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      <Navbar.Collapse id="responsive-navbar-nav">
       <Nav className="ml-auto" activeKey={location.pathname}>
         <FaEnvelope
           size="1.2rem"
@@ -51,6 +53,7 @@ const navbar = (props) => {
           style={{ cursor: "pointer", margin: "0px 10px" }}
         />
       </Nav>
+      </Navbar.Collapse>
     </Navbar>
   );
 };
