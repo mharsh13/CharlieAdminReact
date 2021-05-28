@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./Sidebar.css";
 import { Container, Row, Col } from "react-bootstrap";
 import {
@@ -11,11 +11,15 @@ import {
   FaShoppingCart,
   FaImage,
   FaUserAlt,
+  FaChevronDown,
+  FaChevronUp,
 } from "react-icons/fa";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Sidebar = (props) => {
+  const [showProducts, setshowProducts] = useState(false);
   const { location } = props;
   let attachedClass = [classes.Sidebar, classes.Close];
   if (props.open) {
@@ -23,6 +27,12 @@ const Sidebar = (props) => {
   } else {
     attachedClass = [classes.Sidebar, classes.Close];
   }
+
+  const variants = {
+    visible: { y: 0 },
+    hidden: { y: -100 },
+  };
+
   return (
     <div className={attachedClass.join(" ")}>
       <div>
@@ -134,31 +144,102 @@ const Sidebar = (props) => {
             </Col>
           </Row>
         </Link>
-        <Link to="/products">
-          <Row
-            className="justify-content-md-center"
-            style={{ paddingLeft: "20px", paddingBottom: "10px" }}
-          >
-            <Col md="auto">
-              <FaTshirt
-                size="1.2rem"
-                color={location.pathname === "/products" ? "#fdae26" : "white"}
-                style={{ cursor: "pointer" }}
-              />
-            </Col>
-            <Col>
-              <div
-                style={{
-                  cursor: "pointer",
-                  color:
-                    location.pathname === "/products" ? "#fdae26" : "white",
-                }}
+
+        <Row
+          className="justify-content-md-center"
+          style={{ paddingLeft: "20px", paddingBottom: "10px" }}
+          onClick={() => {
+            setshowProducts(!showProducts);
+          }}
+        >
+          <Col md="auto">
+            <FaTshirt
+              size="1.2rem"
+              color={location.pathname === "/products" ? "#fdae26" : "white"}
+              style={{ cursor: "pointer" }}
+            />
+          </Col>
+          <Col>
+            <div
+              style={{
+                cursor: "pointer",
+                color: "white",
+              }}
+            >
+              Products
+            </div>
+          </Col>
+          {showProducts ? (
+            <motion.div
+            animate={{ rotate: 180 }}
+            >
+              <Col md="auto">
+                <FaChevronUp
+                  size="1rem"
+                  color="white"
+                  style={{ cursor: "pointer" }}
+                />
+              </Col>
+            </motion.div>
+          ) : (
+            <motion.div  animate={{ rotate: -180 }}>
+              <Col md="auto">
+                <FaChevronDown
+                  size="1rem"
+                  color="white"
+                  style={{ cursor: "pointer" }}
+                />
+              </Col>
+            </motion.div>
+          )}
+        </Row>
+
+        {showProducts && (
+          <motion.div initial="hidden" animate="visible" variants={variants}>
+            <Link to="/addproducts">
+              <Row
+                className="justify-content-md-center"
+                style={{ paddingLeft: "60px", paddingBottom: "8px" }}
               >
-                Products
-              </div>
-            </Col>
-          </Row>
-        </Link>
+                <Col md="auto">
+                  <div
+                    style={{
+                      cursor: "pointer",
+                      fontSize: "0.9rem",
+                      color:
+                        location.pathname === "/addproducts"
+                          ? "#fdae26"
+                          : "white",
+                    }}
+                  >
+                    Add Products
+                  </div>
+                </Col>
+              </Row>
+            </Link>
+            <Link to="/editproducts">
+              <Row
+                className="justify-content-md-center"
+                style={{ paddingLeft: "60px", paddingBottom: "8px" }}
+              >
+                <Col md="auto">
+                  <div
+                    style={{
+                      cursor: "pointer",
+                      fontSize: "0.9rem",
+                      color:
+                        location.pathname === "/editproducts"
+                          ? "#fdae26"
+                          : "white",
+                    }}
+                  >
+                    Edit Products
+                  </div>
+                </Col>
+              </Row>
+            </Link>
+          </motion.div>
+        )}
 
         <hr
           style={{
