@@ -5,6 +5,7 @@ import Dashboard from "./Containers/Dashboard/Dashboard";
 import Gender from "./Containers/Gender/Gender";
 import Categories from "./Containers/Categories/Categories";
 import Brands from "./Containers/Brands/Brands";
+import AddProducts from "./Containers/AddProducts/AddProducts"
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/categories" exact component={Categories} />
           <Route path="/gender" exact component={Gender} />
           <Route path="/brands" exact component={Brands} />
+          <Route path="/addproducts" exact component={AddProducts} />
         </Switch>
       </Layout>
     </React.Fragment>
