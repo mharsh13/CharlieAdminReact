@@ -8,6 +8,7 @@ import Brands from "./Containers/Brands/Brands";
 import AddProducts from "./Containers/AddProducts/AddProducts"
 import EditProducts from "./Containers/EditProducts/EditProducts"
 import AddVariants from "./Containers/AddVariants/AddVariants";
+import EditVariants from "./Containers/EditVariants/EditVariants";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/addproducts" exact component={AddProducts} />
           <Route path="/editproducts" exact component={EditProducts} />
           <Route path="/addvariants" exact component={AddVariants} />
+          <Route path="/editvariants" exact component={EditVariants} />
         </Switch>
       </Layout>
     </React.Fragment>

@@ -163,61 +163,63 @@ const ProductData = () => {
             <span className="sr-only">Loading...</span>
           </Spinner>
         ) : (
-          <Table striped bordered hover size="sm">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Gender</th>
-                <th>Category</th>
-                <th>Brand</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {docs.map((doc, index) => (
-                <tr key={doc.id}>
-                  <td>{index + 1}</td>
-                  <td>{doc.product.productName}</td>
-                  <td>{doc.product.genderName}</td>
-                  <td>{doc.product.categoryName}</td>
-                  <td>{doc.product.brandName}</td>
-                  <td>
-                    <Row className="justify-content-md-center">
-                      <Col xs="2">
-                        <FaPen
-                          size="1rem"
-                          color="green"
-                          cursor="pointer"
-                          onClick={() => {
-                            setEditModal(true);
-                            setSelectedId(doc.id);
-
-                            docs.forEach((prod) => {
-                              if (prod.id === doc.id) {
-                                setProduct(prod);
-                              }
-                            });
-                          }}
-                        ></FaPen>
-                      </Col>
-                      <Col xs="2">
-                        <FaTrash
-                          size="1rem"
-                          color="red"
-                          cursor="pointer"
-                          onClick={() => {
-                            setDeleteModal(true);
-                            setSelectedId(doc.id);
-                          }}
-                        ></FaTrash>
-                      </Col>
-                    </Row>
-                  </td>
+          <Container fluid>
+            <Table striped bordered hover size="sm">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Gender</th>
+                  <th>Category</th>
+                  <th>Brand</th>
+                  <th>Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </Table>
+              </thead>
+              <tbody>
+                {docs.map((doc, index) => (
+                  <tr key={doc.id}>
+                    <td>{index + 1}</td>
+                    <td>{doc.product.productName}</td>
+                    <td>{doc.product.genderName}</td>
+                    <td>{doc.product.categoryName}</td>
+                    <td>{doc.product.brandName}</td>
+                    <td>
+                      <Row className="justify-content-md-center">
+                        <Col xs="2">
+                          <FaPen
+                            size="1rem"
+                            color="green"
+                            cursor="pointer"
+                            onClick={() => {
+                              setEditModal(true);
+                              setSelectedId(doc.id);
+
+                              docs.forEach((prod) => {
+                                if (prod.id === doc.id) {
+                                  setProduct(prod);
+                                }
+                              });
+                            }}
+                          ></FaPen>
+                        </Col>
+                        <Col xs="2">
+                          <FaTrash
+                            size="1rem"
+                            color="red"
+                            cursor="pointer"
+                            onClick={() => {
+                              setDeleteModal(true);
+                              setSelectedId(doc.id);
+                            }}
+                          ></FaTrash>
+                        </Col>
+                      </Row>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </Container>
         )}
 
         <DeleteModal
