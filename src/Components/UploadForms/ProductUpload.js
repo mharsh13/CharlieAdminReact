@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Spinner, Toast } from "react-bootstrap";
+import { Form, Button, Spinner, Toast, Row, Col } from "react-bootstrap";
 import {
   projectFirestore,
   projectStorage,
@@ -209,33 +209,38 @@ const ProductUpload = () => {
           Please enter a product description.
         </Form.Control.Feedback>
       </Form.Group>
-
-      <Form.Group controlId="gender">
-        <Form.Label>Select Gender</Form.Label>
-        <Form.Control as="select">
-          {genderList.map((doc) => (
-            <option key={doc.id}>{doc.gender.GenderName}</option>
-          ))}
-        </Form.Control>
-      </Form.Group>
-
-      <Form.Group controlId="category">
-        <Form.Label>Select Category</Form.Label>
-        <Form.Control as="select">
-          {categoryList.map((doc) => (
-            <option key={doc.id}>{doc.category.CategoryName}</option>
-          ))}
-        </Form.Control>
-      </Form.Group>
-
-      <Form.Group controlId="brand">
-        <Form.Label>Select Brand</Form.Label>
-        <Form.Control as="select">
-          {brandList.map((doc) => (
-            <option key={doc.id}>{doc.brand.BrandName}</option>
-          ))}
-        </Form.Control>
-      </Form.Group>
+      <Row className="justify-content-md-center">
+        <Col>
+          <Form.Group controlId="gender">
+            <Form.Label>Select Gender</Form.Label>
+            <Form.Control as="select">
+              {genderList.map((doc) => (
+                <option key={doc.id}>{doc.gender.GenderName}</option>
+              ))}
+            </Form.Control>
+          </Form.Group>{" "}
+        </Col>
+        <Col>
+          <Form.Group controlId="category">
+            <Form.Label>Select Category</Form.Label>
+            <Form.Control as="select">
+              {categoryList.map((doc) => (
+                <option key={doc.id}>{doc.category.CategoryName}</option>
+              ))}
+            </Form.Control>
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group controlId="brand">
+            <Form.Label>Select Brand</Form.Label>
+            <Form.Control as="select">
+              {brandList.map((doc) => (
+                <option key={doc.id}>{doc.brand.BrandName}</option>
+              ))}
+            </Form.Control>
+          </Form.Group>
+        </Col>
+      </Row>
 
       <label
         className={classes.customfileinputMultiple}
