@@ -170,9 +170,7 @@ const Sidebar = (props) => {
             </div>
           </Col>
           {showProducts ? (
-            <motion.div
-            animate={{ rotate: 180 }}
-            >
+            <motion.div animate={{ rotate: 180 }}>
               <Col md="auto">
                 <FaChevronUp
                   size="1rem"
@@ -182,7 +180,7 @@ const Sidebar = (props) => {
               </Col>
             </motion.div>
           ) : (
-            <motion.div  animate={{ rotate: -180 }}>
+            <motion.div animate={{ rotate: -180 }}>
               <Col md="auto">
                 <FaChevronDown
                   size="1rem"
@@ -234,6 +232,48 @@ const Sidebar = (props) => {
                     }}
                   >
                     Edit Products
+                  </div>
+                </Col>
+              </Row>
+            </Link>
+            <Link to="/addvariants">
+              <Row
+                className="justify-content-md-center"
+                style={{ paddingLeft: "60px", paddingBottom: "8px" }}
+              >
+                <Col md="auto">
+                  <div
+                    style={{
+                      cursor: "pointer",
+                      fontSize: "0.9rem",
+                      color:
+                        location.pathname === "/addvariants"
+                          ? "#fdae26"
+                          : "white",
+                    }}
+                  >
+                    Add Variants
+                  </div>
+                </Col>
+              </Row>
+            </Link>
+            <Link to="/editvariants">
+              <Row
+                className="justify-content-md-center"
+                style={{ paddingLeft: "60px", paddingBottom: "8px" }}
+              >
+                <Col md="auto">
+                  <div
+                    style={{
+                      cursor: "pointer",
+                      fontSize: "0.9rem",
+                      color:
+                        location.pathname === "/editvariants"
+                          ? "#fdae26"
+                          : "white",
+                    }}
+                  >
+                    Edit Variants
                   </div>
                 </Col>
               </Row>

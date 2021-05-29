@@ -78,7 +78,7 @@ const ProductUpload = () => {
     setTimeout(() => {
       setShowA(false);
       window.location.reload();
-    }, 3000);
+    }, 2000);
   };
 
   const [showB, setShowB] = useState(false);
