@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Spinner, Toast } from "react-bootstrap";
 import {
   projectFirestore,
@@ -13,15 +12,15 @@ import { motion } from "framer-motion";
 const ProductUpload = () => {
   const [validated, setValidated] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState(null);
   const [genderList, setGenderList] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
   const [brandList, setBrandList] = useState([]);
   const [loading, loadingStatus] = useState(false);
-  const [uploadedImages, setUploadedImages] = useState([]);
+  const [uploadedImages, setUploadedImages] = useState(null);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState(false);
-  const [listUrl, seturlList] = useState([]);
+  const [listUrl, seturlList] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -78,6 +77,16 @@ const ProductUpload = () => {
     setShowA(true);
     setTimeout(() => {
       setShowA(false);
+      window.location.reload();
+    }, 3000);
+  };
+
+  const [showB, setShowB] = useState(false);
+
+  const showToastB = () => {
+    setShowB(true);
+    setTimeout(() => {
+      setShowB(false);
     }, 3000);
   };
 
@@ -112,6 +121,7 @@ const ProductUpload = () => {
       );
     });
     seturlList(urlList);
+    showToastB();
     setLoading(false);
   };
 
@@ -136,12 +146,7 @@ const ProductUpload = () => {
       };
       await collectionRef.add({ product });
       setLoading(false);
-      setImages([]);
-      setUploadedImages([]);
-      seturlList([]);
-      setProgress(0);
       showToast();
-      setValidated(false);
     }
     setValidated(true);
   }
@@ -232,7 +237,10 @@ const ProductUpload = () => {
         </Form.Control>
       </Form.Group>
 
-      <label className={classes.customfileinput} style={{ height: "35px" }}>
+      <label
+        className={classes.customfileinputMultiple}
+        style={{ height: "35px" }}
+      >
         <input
           type="file"
           accept="image/png,image/jpeg"
@@ -279,10 +287,13 @@ const ProductUpload = () => {
         <Button
           size="sm"
           variant="success"
-          disabled={isLoading}
+          disabled={isLoading || images === null}
           onClick={handleSubmit}
           className={classes.Button}
-          style={{ marginBottom: showA ? "0px" : "20px", marginRight: "20px" }}
+          style={{
+            marginBottom: showA || showB ? "0px" : "20px",
+            marginRight: "20px",
+          }}
         >
           {isLoading ? "Loading…" : "Upload Images"}
         </Button>
@@ -290,9 +301,12 @@ const ProductUpload = () => {
           size="sm"
           variant="success"
           type="submit"
-          disabled={isLoading}
+          disabled={isLoading || listUrl === null}
           className={classes.Button}
-          style={{ marginBottom: showA ? "0px" : "20px", marginRight: "20px" }}
+          style={{
+            marginBottom: showA || showB ? "0px" : "20px",
+            marginRight: "20px",
+          }}
         >
           {isLoading ? "Loading…" : "Submit"}
         </Button>
@@ -319,6 +333,29 @@ const ProductUpload = () => {
             }}
           >
             <Toast.Body>Product Uploaded Successfully!</Toast.Body>
+          </Toast>
+        </motion.div>
+      )}
+
+      {showB && (
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={variants}
+          aria-live="polite"
+          aria-atomic="true"
+          style={{
+            position: "relative",
+            minHeight: "60px",
+          }}
+        >
+          <Toast
+            style={{
+              position: "absolute",
+              top: 20,
+            }}
+          >
+            <Toast.Body>Images Uploaded Successfully!</Toast.Body>
           </Toast>
         </motion.div>
       )}
