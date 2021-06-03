@@ -72,8 +72,8 @@ const VariantUpload = () => {
   const showToast = () => {
     setShowA(true);
     setTimeout(() => {
-      setShowA(false);
       window.location.reload();
+      setShowA(false);
     }, 2000);
   };
 

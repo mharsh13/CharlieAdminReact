@@ -41,7 +41,6 @@ const VariantEdit = (props) => {
       collectionRef.update({ variant });
       showToast();
       setLoading(false);
-      form.reset();
       setValidated(false);
       props.onSave();
     }
@@ -54,7 +53,6 @@ const VariantEdit = (props) => {
     setShowA(true);
     setTimeout(() => {
       setShowA(false);
-      window.location.reload();
     }, 2000);
   };
 

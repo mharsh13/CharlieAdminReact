@@ -40,7 +40,7 @@ const VariantData = () => {
   }, []);
 
   useEffect(() => {
-    if (selectedProduct !== null) {
+    if (selectedProduct != null) {
       setLoading(true);
       const unsub = projectFirestore
         .collection("products")

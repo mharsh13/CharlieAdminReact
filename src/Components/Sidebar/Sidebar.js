@@ -170,9 +170,9 @@ const Sidebar = (props) => {
             </div>
           </Col>
           {showProducts ? (
-            <motion.div animate={{ rotate: 180 }}>
+            <motion.div animate={{ rotate: -180 }}>
               <Col md="auto">
-                <FaChevronUp
+                <FaChevronDown
                   size="1rem"
                   color="white"
                   style={{ cursor: "pointer" }}
@@ -180,9 +180,9 @@ const Sidebar = (props) => {
               </Col>
             </motion.div>
           ) : (
-            <motion.div animate={{ rotate: -180 }}>
+            <motion.div animate={{ rotate: 180 }}>
               <Col md="auto">
-                <FaChevronDown
+                <FaChevronUp
                   size="1rem"
                   color="white"
                   style={{ cursor: "pointer" }}
