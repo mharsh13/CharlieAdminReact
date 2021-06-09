@@ -5,9 +5,11 @@
 }
 
 .Open{
+    width: 81.75%;
     transform: translateX(280px);
 }
 
 .Close{
+    width: 100%;
     transform: translateX(0%);
 }

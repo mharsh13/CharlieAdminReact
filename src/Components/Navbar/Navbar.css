@@ -4,9 +4,11 @@
     transition: transform 0.3s ease-out;
   }
 .Open{
-      transform: translateX(280px);
+  transform: translateX(280px);
+  width: 81.75%;
   }
   
   .Close{
-      transform: translateX(0%);
+    transform: translateX(0%);
+    width: 100%;
   }
