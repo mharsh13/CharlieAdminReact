@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from "react";
-import {
-  Form,
-  Button,
-  Row,
-  Col,
-  Container,
-  Spinner,
-  Toast,
-} from "react-bootstrap";
+import { Form, Button, Row, Col, Container, Spinner } from "react-bootstrap";
 import { projectFirestore } from "../../firebase/config";
 import classes from "./UploadForm.css";
-import { motion } from "framer-motion";
 
 const VariantUpload = () => {
   const [isLoading, setLoading] = useState(false);
@@ -117,27 +108,15 @@ const VariantUpload = () => {
         sellingPrice: event.currentTarget.sellingPrice.value,
         quantity: event.currentTarget.quantity.value,
       };
-      await collectionRef.add({ variant });
-      showToast();
-      setLoading(false);
+      await collectionRef.add({ variant }).then(() => {
+        form.reset();
+        setValidated(false);
+        setLoading(false);
+        window.location.reload();
+      });
     }
     setValidated(true);
   }
-
-  const [showA, setShowA] = useState(false);
-
-  const showToast = () => {
-    setShowA(true);
-    setTimeout(() => {
-      window.location.reload();
-      setShowA(false);
-    }, 2000);
-  };
-
-  const variants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1 },
-  };
 
   return (
     <Container>
@@ -281,6 +260,7 @@ const VariantUpload = () => {
             noValidate
             validated={validated}
             className="form"
+            id="form2"
             onSubmit={uploadVariant}
           >
             <Form.Group controlId="product">
@@ -312,7 +292,6 @@ const VariantUpload = () => {
                   <Form.Control
                     type="text"
                     placeholder="Enter Color Name"
-                    required
                     className={classes.Form}
                   />
                   <Form.Control.Feedback type="invalid">
@@ -326,7 +305,6 @@ const VariantUpload = () => {
                   <Form.Control
                     type="text"
                     placeholder="Enter Color Code"
-                    required
                     className={classes.Form}
                   />
                   <Form.Control.Feedback type="invalid">
@@ -392,28 +370,6 @@ const VariantUpload = () => {
             >
               {isLoading ? "Loading…" : "Submit"}
             </Button>
-            {showA && (
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={variants}
-                aria-live="polite"
-                aria-atomic="true"
-                style={{
-                  position: "relative",
-                  minHeight: "60px",
-                }}
-              >
-                <Toast
-                  style={{
-                    position: "absolute",
-                    top: 20,
-                  }}
-                >
-                  <Toast.Body>Product Uploaded Successfully!</Toast.Body>
-                </Toast>
-              </motion.div>
-            )}
           </Form>
         </Container>
       )}

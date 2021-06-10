@@ -71,16 +71,6 @@ const ProductUpload = () => {
     return () => unsub();
   }, []);
 
-  const [showA, setShowA] = useState(false);
-
-  const showToast = () => {
-    setShowA(true);
-    setTimeout(() => {
-      setShowA(false);
-      window.location.reload();
-    }, 2000);
-  };
-
   const [showB, setShowB] = useState(false);
 
   const showToastB = () => {
@@ -144,9 +134,10 @@ const ProductUpload = () => {
         brandName: event.target.brand.value,
         Date: timestamp(),
       };
-      await collectionRef.add({ product });
-      setLoading(false);
-      showToast();
+      await collectionRef.add({ product }).then(() => {
+        setLoading(false);
+        window.location.reload();
+      });
     }
     setValidated(true);
   }
@@ -296,7 +287,7 @@ const ProductUpload = () => {
           onClick={handleSubmit}
           className={classes.Button}
           style={{
-            marginBottom: showA || showB ? "0px" : "20px",
+            marginBottom: showB ? "0px" : "20px",
             marginRight: "20px",
           }}
         >
@@ -309,7 +300,7 @@ const ProductUpload = () => {
           disabled={isLoading || listUrl === null}
           className={classes.Button}
           style={{
-            marginBottom: showA || showB ? "0px" : "20px",
+            marginBottom: showB ? "0px" : "20px",
             marginRight: "20px",
           }}
         >
@@ -318,29 +309,6 @@ const ProductUpload = () => {
       </div>
 
       <div></div>
-
-      {showA && (
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={variants}
-          aria-live="polite"
-          aria-atomic="true"
-          style={{
-            position: "relative",
-            minHeight: "60px",
-          }}
-        >
-          <Toast
-            style={{
-              position: "absolute",
-              top: 20,
-            }}
-          >
-            <Toast.Body>Product Uploaded Successfully!</Toast.Body>
-          </Toast>
-        </motion.div>
-      )}
 
       {showB && (
         <motion.div
