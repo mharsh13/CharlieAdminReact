@@ -12,6 +12,7 @@ import {
 import { FaSortDown, FaPen, FaTrash, FaSortUp } from "react-icons/fa";
 import { projectFirestore } from "../../firebase/config";
 import ProductEdit from "../EditForms/ProductEdit";
+import { Link } from "react-router-dom";
 
 const ProductData = () => {
   const [docs, setDocs] = useState([]);
@@ -471,7 +472,19 @@ const ProductData = () => {
                   <tr key={doc.id}>
                     <td>{index + 1}</td>
                     <td>
-                      <Container>{doc.product.productName}</Container>
+                      <Link
+                        to={{
+                          pathname: "/editvariants",
+                          state: { product: doc },
+                        }}
+                        style={{ textDecoration: 'none' }}
+                      >
+                        <Container>
+                          <div style={{ color:"black" }}>
+                            {doc.product.productName}
+                          </div>
+                        </Container>
+                      </Link>
                     </td>
                     <td>
                       <Container>{doc.product.genderName}</Container>

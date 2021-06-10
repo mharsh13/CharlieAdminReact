@@ -2,10 +2,10 @@ import React from "react";
 import classes from "./EditVariants.css";
 import VariantData from "../../Components/UploadedData/VariantData";
 
-const EditVariants = () => {
+const EditVariants = (props) => {
   return (
     <div className={classes.EditVariants}>
-     <VariantData></VariantData>
+     <VariantData product={props.location.state}></VariantData>
     </div>
   );
 };

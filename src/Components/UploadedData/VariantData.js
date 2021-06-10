@@ -13,7 +13,7 @@ import { FaPen, FaTrash, FaSortDown, FaSortUp } from "react-icons/fa";
 import { projectFirestore } from "../../firebase/config";
 import VariantEdit from "../EditForms/VariantEdit";
 
-const VariantData = () => {
+const VariantData = (props) => {
   const [docs, setDocs] = useState([]);
   const [showDeleteModal, setDeleteModal] = useState(false);
   const [showEditModal, setEditModal] = useState(false);
@@ -33,11 +33,16 @@ const VariantData = () => {
           documents.push({ ...doc.data(), id: doc.id });
         });
         setDocs(documents);
-        setProduct(documents[0]);
+        console.log(props);
+        if (props.product == null) {
+          setProduct(documents[0]);
+        } else {
+          setProduct(props.product.product);
+        }
         setLoading(false);
       });
     return () => unsub();
-  }, []);
+  }, [props]);
 
   useEffect(() => {
     if (selectedProduct != null) {
