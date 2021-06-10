@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import {
   Container,
@@ -8,13 +7,15 @@ import {
   Button,
   Table,
   Spinner,
+  Form,
 } from "react-bootstrap";
-import { FaPen, FaTrash } from "react-icons/fa";
+import { FaSortDown, FaPen, FaTrash, FaSortUp } from "react-icons/fa";
 import { projectFirestore } from "../../firebase/config";
 import ProductEdit from "../EditForms/ProductEdit";
 
 const ProductData = () => {
   const [docs, setDocs] = useState([]);
+  const [alldocs, setAllDocs] = useState([]);
   const [showDeleteModal, setDeleteModal] = useState(false);
   const [showEditModal, setEditModal] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
@@ -23,6 +24,9 @@ const ProductData = () => {
   const [genderList, setGenderList] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
   const [brandList, setBrandList] = useState([]);
+  const [selectedBrand, setSelectedBrand] = useState(null);
+  const [selectedGender, setSelectedGender] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -84,6 +88,7 @@ const ProductData = () => {
           documents.push({ ...doc.data(), id: doc.id });
         });
         setDocs(documents);
+        setAllDocs(documents);
         setLoading(false);
       });
     return () => unsub();
@@ -164,25 +169,319 @@ const ProductData = () => {
           </Spinner>
         ) : (
           <Container fluid>
-            <Table striped bordered hover size="sm">
+            <Form id="form">
+              <Row className="justify-content-md-center">
+                <Col>
+                  <Form.Group controlId="gender">
+                    <Form.Control
+                      as="select"
+                      onChange={(event) => {
+                        setSelectedGender(event.target.value);
+                      }}
+                    >
+                      <option defaultValue style={{ display: "none" }}>
+                        Select Gender
+                      </option>
+                      {genderList.map((doc) => (
+                        <option key={doc.id}>{doc.gender.GenderName}</option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>{" "}
+                </Col>
+                <Col>
+                  <Form.Group controlId="category">
+                    <Form.Control
+                      as="select"
+                      onChange={(event) => {
+                        setSelectedCategory(event.target.value);
+                      }}
+                    >
+                      <option defaultValue style={{ display: "none" }}>
+                        Select Category
+                      </option>
+                      {categoryList.map((doc) => (
+                        <option key={doc.id}>
+                          {doc.category.CategoryName}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group controlId="brand">
+                    <Form.Control
+                      as="select"
+                      onChange={(event) => {
+                        setSelectedBrand(event.target.value);
+                      }}
+                    >
+                      <option defaultValue style={{ display: "none" }}>
+                        Select Brand
+                      </option>
+                      {brandList.map((doc) => (
+                        <option key={doc.id}>{doc.brand.BrandName}</option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Container fluid style={{ textAlign: "right" }}>
+                <Button
+                  size="sm"
+                  variant="success"
+                  onClick={() => {
+                    var temp1 = [];
+                    var temp2 = [];
+                    var temp3 = [];
+                    if (selectedBrand == null) {
+                      temp1 = alldocs;
+                    } else {
+                      alldocs.forEach((doc) => {
+                        if (doc.product.brandName === selectedBrand) {
+                          temp1.push(doc);
+                        }
+                      });
+                    }
+                    if (selectedGender == null) {
+                      temp2 = alldocs;
+                    } else {
+                      alldocs.forEach((doc) => {
+                        if (doc.product.genderName === selectedGender) {
+                          temp2.push(doc);
+                        }
+                      });
+                    }
+                    if (selectedCategory == null) {
+                      temp3 = alldocs;
+                    } else {
+                      alldocs.forEach((doc) => {
+                        if (doc.product.categoryName === selectedCategory) {
+                          temp3.push(doc);
+                        }
+                      });
+                    }
+                    var arrays = [temp1, temp2, temp3];
+                    var result = arrays.shift().reduce(function (res, v) {
+                      if (
+                        res.indexOf(v) === -1 &&
+                        arrays.every(function (a) {
+                          return a.indexOf(v) !== -1;
+                        })
+                      )
+                        res.push(v);
+                      return res;
+                    }, []);
+
+                    setDocs(result);
+                  }}
+                  style={{
+                    marginBottom: "20px",
+                    marginRight: "20px",
+                    width: "140px",
+                  }}
+                >
+                  Filter
+                </Button>
+                <Button
+                  size="sm"
+                  variant="danger"
+                  onClick={() => {
+                    setSelectedBrand(null);
+                    setDocs(alldocs);
+                    setSelectedCategory(null);
+                    setSelectedGender(null);
+                    document.getElementById("form").reset();
+                  }}
+                  style={{
+                    marginBottom: "20px",
+                    width: "140px",
+                  }}
+                >
+                  Remove Filter
+                </Button>
+              </Container>
+            </Form>
+            <Table bordered hover size="sm">
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Name</th>
-                  <th>Gender</th>
-                  <th>Category</th>
-                  <th>Brand</th>
-                  <th>Action</th>
+                  <th>
+                    <Container>
+                      <Row>
+                        <Col>Name</Col>
+                        <Col md="auto">
+                          <FaSortUp
+                            color="grey"
+                            cursor="pointer"
+                            onClick={() => {
+                              const myData = []
+                                .concat(docs)
+                                .sort((a, b) =>
+                                  a.product.productName > b.product.productName
+                                    ? 1
+                                    : -1
+                                );
+                              setDocs(myData);
+                            }}
+                          ></FaSortUp>
+
+                          <FaSortDown
+                            color="grey"
+                            cursor="pointer"
+                            onClick={() => {
+                              const myData = []
+                                .concat(docs)
+                                .sort((a, b) =>
+                                  b.product.productName > a.product.productName
+                                    ? 1
+                                    : -1
+                                );
+                              setDocs(myData);
+                            }}
+                          ></FaSortDown>
+                        </Col>
+                      </Row>
+                    </Container>
+                  </th>
+                  <th>
+                    {" "}
+                    <Container>
+                      <Row>
+                        <Col>Gender</Col>
+                        <Col md="auto">
+                          <FaSortUp
+                            color="grey"
+                            cursor="pointer"
+                            onClick={() => {
+                              const myData = []
+                                .concat(docs)
+                                .sort((a, b) =>
+                                  a.product.genderName > b.product.genderName
+                                    ? 1
+                                    : -1
+                                );
+                              setDocs(myData);
+                            }}
+                          ></FaSortUp>
+
+                          <FaSortDown
+                            color="grey"
+                            cursor="pointer"
+                            onClick={() => {
+                              const myData = []
+                                .concat(docs)
+                                .sort((a, b) =>
+                                  b.product.genderName > a.product.genderName
+                                    ? 1
+                                    : -1
+                                );
+                              setDocs(myData);
+                            }}
+                          ></FaSortDown>
+                        </Col>
+                      </Row>
+                    </Container>
+                  </th>
+                  <th>
+                    {" "}
+                    <Container>
+                      <Row>
+                        <Col>Category</Col>
+                        <Col md="auto">
+                          <FaSortUp
+                            color="grey"
+                            cursor="pointer"
+                            onClick={() => {
+                              const myData = []
+                                .concat(docs)
+                                .sort((a, b) =>
+                                  a.product.categoryName >
+                                  b.product.categoryName
+                                    ? 1
+                                    : -1
+                                );
+                              setDocs(myData);
+                            }}
+                          ></FaSortUp>
+
+                          <FaSortDown
+                            color="grey"
+                            cursor="pointer"
+                            onClick={() => {
+                              const myData = []
+                                .concat(docs)
+                                .sort((a, b) =>
+                                  b.product.categoryName >
+                                  a.product.categoryName
+                                    ? 1
+                                    : -1
+                                );
+                              setDocs(myData);
+                            }}
+                          ></FaSortDown>
+                        </Col>
+                      </Row>
+                    </Container>
+                  </th>
+                  <th>
+                    <Container>
+                      <Row>
+                        <Col>Brand</Col>
+                        <Col md="auto">
+                          <FaSortUp
+                            color="grey"
+                            cursor="pointer"
+                            onClick={() => {
+                              const myData = []
+                                .concat(docs)
+                                .sort((a, b) =>
+                                  a.product.brandName > b.product.brandName
+                                    ? 1
+                                    : -1
+                                );
+                              setDocs(myData);
+                            }}
+                          ></FaSortUp>
+
+                          <FaSortDown
+                            color="grey"
+                            cursor="pointer"
+                            onClick={() => {
+                              const myData = []
+                                .concat(docs)
+                                .sort((a, b) =>
+                                  b.product.brandName > a.product.brandName
+                                    ? 1
+                                    : -1
+                                );
+                              setDocs(myData);
+                            }}
+                          ></FaSortDown>
+                        </Col>
+                      </Row>
+                    </Container>
+                  </th>
+                  <th>
+                    <Container>Action</Container>
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {docs.map((doc, index) => (
                   <tr key={doc.id}>
                     <td>{index + 1}</td>
-                    <td>{doc.product.productName}</td>
-                    <td>{doc.product.genderName}</td>
-                    <td>{doc.product.categoryName}</td>
-                    <td>{doc.product.brandName}</td>
+                    <td>
+                      <Container>{doc.product.productName}</Container>
+                    </td>
+                    <td>
+                      <Container>{doc.product.genderName}</Container>
+                    </td>
+                    <td>
+                      <Container>{doc.product.categoryName}</Container>
+                    </td>
+                    <td>
+                      <Container>{doc.product.brandName}</Container>
+                    </td>
                     <td>
                       <Row className="justify-content-md-center">
                         <Col xs="2">

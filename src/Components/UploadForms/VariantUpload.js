@@ -14,8 +14,64 @@ import { motion } from "framer-motion";
 
 const VariantUpload = () => {
   const [isLoading, setLoading] = useState(false);
+  const [alldocs, setAllDocs] = useState([]);
   const [validated, setValidated] = useState(false);
   const [productList, setProductList] = useState([]);
+  const [genderList, setGenderList] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
+  const [brandList, setBrandList] = useState([]);
+  const [selectedBrand, setSelectedBrand] = useState(null);
+  const [selectedGender, setSelectedGender] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  useEffect(() => {
+    setLoading(true);
+    const unsub = projectFirestore
+      .collection("gender")
+      .orderBy("gender.Date", "desc")
+      .onSnapshot((snap) => {
+        let documents = [];
+        snap.forEach((doc) => {
+          documents.push({ ...doc.data(), id: doc.id });
+        });
+        setGenderList(documents);
+        setLoading(false);
+      });
+
+    return () => unsub();
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    const unsub = projectFirestore
+      .collection("categories")
+      .orderBy("category.Date", "desc")
+      .onSnapshot((snap) => {
+        let documents = [];
+        snap.forEach((doc) => {
+          documents.push({ ...doc.data(), id: doc.id });
+        });
+        setCategoryList(documents);
+        setLoading(false);
+      });
+    return () => unsub();
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    const unsub = projectFirestore
+      .collection("brands")
+      .orderBy("brand.Date", "desc")
+      .onSnapshot((snap) => {
+        let documents = [];
+        snap.forEach((doc) => {
+          documents.push({ ...doc.data(), id: doc.id });
+        });
+        setBrandList(documents);
+        setLoading(false);
+      });
+    return () => unsub();
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -28,6 +84,7 @@ const VariantUpload = () => {
           documents.push({ ...doc.data(), id: doc.id });
         });
         setProductList(documents);
+        setAllDocs(documents);
         setLoading(false);
       });
     return () => unsub();
@@ -89,144 +146,276 @@ const VariantUpload = () => {
           <span className="sr-only">Loading...</span>
         </Spinner>
       ) : (
-        <Form
-          noValidate
-          validated={validated}
-          className="form"
-          onSubmit={uploadVariant}
-        >
-          <Form.Group controlId="product">
-            <Form.Label>Select Product</Form.Label>
-            <Form.Control as="select">
-              {productList.map((doc) => (
-                <option key={doc.id}>{doc.product.productName}</option>
-              ))}
-            </Form.Control>
-          </Form.Group>{" "}
-          <Row className="justify-content-md-center">
-            <Col>
-              <Form.Group controlId="size">
-                <Form.Label>Enter Size</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Size"
-                  required
-                  className={classes.Form}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please enter a size.
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group controlId="colorName">
-                <Form.Label>Enter Color Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Color Name"
-                  required
-                  className={classes.Form}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please enter a color name.
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group controlId="colorCode">
-                <Form.Label>Enter Color Code</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Color Code"
-                  required
-                  className={classes.Form}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please enter a color code.
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row className="justify-content-md-center">
-            <Col>
-              <Form.Group controlId="costPrice">
-                <Form.Label>Enter Cost Price</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Enter Cost Price"
-                  required
-                  className={classes.Form}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please enter a cost price.
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group controlId="sellingPrice">
-                <Form.Label>Enter Selling Price</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Enter Selling Price"
-                  required
-                  className={classes.Form}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please enter a selling price.
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group controlId="quantity">
-                <Form.Label>Enter Quantity</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Enter Quantity"
-                  required
-                  className={classes.Form}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please enter a quantity.
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Col>
-          </Row>
-          <Button
-            size="sm"
-            variant="success"
-            type="submit"
-            disabled={isLoading}
-            className={classes.Button}
-            style={{
-              marginBottom: "20px",
-              marginTop: "20px",
-            }}
-          >
-            {isLoading ? "Loading…" : "Submit"}
-          </Button>
-          {showA && (
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={variants}
-              aria-live="polite"
-              aria-atomic="true"
-              style={{
-                position: "relative",
-                minHeight: "60px",
-              }}
-            >
-              <Toast
+        <Container fluid>
+          <Form id="form">
+            <Row className="justify-content-md-center">
+              <Col>
+                <Form.Group controlId="gender">
+                  <Form.Control
+                    as="select"
+                    onChange={(event) => {
+                      setSelectedGender(event.target.value);
+                    }}
+                  >
+                    <option defaultValue style={{ display: "none" }}>
+                      Select Gender
+                    </option>
+                    {genderList.map((doc) => (
+                      <option key={doc.id}>{doc.gender.GenderName}</option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>{" "}
+              </Col>
+              <Col>
+                <Form.Group controlId="category">
+                  <Form.Control
+                    as="select"
+                    onChange={(event) => {
+                      setSelectedCategory(event.target.value);
+                    }}
+                  >
+                    <option defaultValue style={{ display: "none" }}>
+                      Select Category
+                    </option>
+                    {categoryList.map((doc) => (
+                      <option key={doc.id}>{doc.category.CategoryName}</option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="brand">
+                  <Form.Control
+                    as="select"
+                    onChange={(event) => {
+                      setSelectedBrand(event.target.value);
+                    }}
+                  >
+                    <option defaultValue style={{ display: "none" }}>
+                      Select Brand
+                    </option>
+                    {brandList.map((doc) => (
+                      <option key={doc.id}>{doc.brand.BrandName}</option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Container fluid style={{ textAlign: "right" }}>
+              <Button
+                size="sm"
+                variant="success"
+                onClick={() => {
+                  var temp1 = [];
+                  var temp2 = [];
+                  var temp3 = [];
+                  if (selectedBrand == null) {
+                    temp1 = alldocs;
+                  } else {
+                    alldocs.forEach((doc) => {
+                      if (doc.product.brandName === selectedBrand) {
+                        temp1.push(doc);
+                      }
+                    });
+                  }
+                  if (selectedGender == null) {
+                    temp2 = alldocs;
+                  } else {
+                    alldocs.forEach((doc) => {
+                      if (doc.product.genderName === selectedGender) {
+                        temp2.push(doc);
+                      }
+                    });
+                  }
+                  if (selectedCategory == null) {
+                    temp3 = alldocs;
+                  } else {
+                    alldocs.forEach((doc) => {
+                      if (doc.product.categoryName === selectedCategory) {
+                        temp3.push(doc);
+                      }
+                    });
+                  }
+                  var arrays = [temp1, temp2, temp3];
+                  var result = arrays.shift().reduce(function (res, v) {
+                    if (
+                      res.indexOf(v) === -1 &&
+                      arrays.every(function (a) {
+                        return a.indexOf(v) !== -1;
+                      })
+                    )
+                      res.push(v);
+                    return res;
+                  }, []);
+
+                  setProductList(result);
+                }}
                 style={{
-                  position: "absolute",
-                  top: 20,
+                  marginBottom: "20px",
+                  marginRight: "20px",
+                  width: "140px",
                 }}
               >
-                <Toast.Body>Product Uploaded Successfully!</Toast.Body>
-              </Toast>
-            </motion.div>
-          )}
-        </Form>
+                Filter
+              </Button>
+              <Button
+                size="sm"
+                variant="danger"
+                onClick={() => {
+                  setSelectedBrand(null);
+                  setProductList(alldocs);
+                  setSelectedCategory(null);
+                  setSelectedGender(null);
+                  document.getElementById("form").reset();
+                }}
+                style={{
+                  marginBottom: "20px",
+                  width: "140px",
+                }}
+              >
+                Remove Filter
+              </Button>
+            </Container>
+          </Form>
+          <Form
+            noValidate
+            validated={validated}
+            className="form"
+            onSubmit={uploadVariant}
+          >
+            <Form.Group controlId="product">
+              <Form.Label>Select Product</Form.Label>
+              <Form.Control as="select">
+                {productList.map((doc) => (
+                  <option key={doc.id}>{doc.product.productName}</option>
+                ))}
+              </Form.Control>
+            </Form.Group>{" "}
+            <Row className="justify-content-md-center">
+              <Col>
+                <Form.Group controlId="size">
+                  <Form.Label>Enter Size</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter Size"
+                    required
+                    className={classes.Form}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please enter a size.
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="colorName">
+                  <Form.Label>Enter Color Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter Color Name"
+                    required
+                    className={classes.Form}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please enter a color name.
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="colorCode">
+                  <Form.Label>Enter Color Code</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter Color Code"
+                    required
+                    className={classes.Form}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please enter a color code.
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="justify-content-md-center">
+              <Col>
+                <Form.Group controlId="costPrice">
+                  <Form.Label>Enter Cost Price</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="Enter Cost Price"
+                    required
+                    className={classes.Form}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please enter a cost price.
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="sellingPrice">
+                  <Form.Label>Enter Selling Price</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="Enter Selling Price"
+                    required
+                    className={classes.Form}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please enter a selling price.
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="quantity">
+                  <Form.Label>Enter Quantity</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="Enter Quantity"
+                    required
+                    className={classes.Form}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please enter a quantity.
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Button
+              size="sm"
+              variant="success"
+              type="submit"
+              disabled={isLoading}
+              className={classes.Button}
+              style={{
+                marginBottom: "20px",
+                marginTop: "20px",
+              }}
+            >
+              {isLoading ? "Loading…" : "Submit"}
+            </Button>
+            {showA && (
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={variants}
+                aria-live="polite"
+                aria-atomic="true"
+                style={{
+                  position: "relative",
+                  minHeight: "60px",
+                }}
+              >
+                <Toast
+                  style={{
+                    position: "absolute",
+                    top: 20,
+                  }}
+                >
+                  <Toast.Body>Product Uploaded Successfully!</Toast.Body>
+                </Toast>
+              </motion.div>
+            )}
+          </Form>
+        </Container>
       )}
     </Container>
   );

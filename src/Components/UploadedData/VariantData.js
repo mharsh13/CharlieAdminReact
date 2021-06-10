@@ -9,7 +9,7 @@ import {
   Spinner,
   Form,
 } from "react-bootstrap";
-import { FaPen, FaTrash } from "react-icons/fa";
+import { FaPen, FaTrash, FaSortDown, FaSortUp } from "react-icons/fa";
 import { projectFirestore } from "../../firebase/config";
 import VariantEdit from "../EditForms/VariantEdit";
 
@@ -144,7 +144,6 @@ const VariantData = () => {
                       if (prod.product.productName === event.target.value) {
                         setProduct(prod);
                       }
-                      console.log(variantList);
                     });
                   }}
                 >
@@ -159,59 +158,301 @@ const VariantData = () => {
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Size</th>
-                    <th>Color Name</th>
-                    <th>Color Code</th>
-                    <th>Cost Price</th>
-                    <th>Selling Price</th>
-                    <th>Quantity</th>
-                    <th>Action</th>
+                    <th>
+                      {" "}
+                      <Container>
+                        <Row>
+                          <Col>Size</Col>
+                          <Col md="auto">
+                            <FaSortUp
+                              color="grey"
+                              cursor="pointer"
+                              onClick={() => {
+                                const myData = []
+                                  .concat(variantList)
+                                  .sort((a, b) =>
+                                    a.variant.size > b.variant.size ? 1 : -1
+                                  );
+                                setVariantList(myData);
+                              }}
+                            ></FaSortUp>
+
+                            <FaSortDown
+                              color="grey"
+                              cursor="pointer"
+                              onClick={() => {
+                                const myData = []
+                                  .concat(variantList)
+                                  .sort((a, b) =>
+                                    b.variant.size > a.variant.size ? 1 : -1
+                                  );
+                                setVariantList(myData);
+                              }}
+                            ></FaSortDown>
+                          </Col>
+                        </Row>
+                      </Container>
+                    </th>
+                    <th>
+                      <Container>
+                        <Row>
+                          <Col>Color Name</Col>
+                          <Col md="auto">
+                            <FaSortUp
+                              color="grey"
+                              cursor="pointer"
+                              onClick={() => {
+                                const myData = []
+                                  .concat(variantList)
+                                  .sort((a, b) =>
+                                    a.variant.colorName > b.variant.colorName
+                                      ? 1
+                                      : -1
+                                  );
+                                setVariantList(myData);
+                              }}
+                            ></FaSortUp>
+
+                            <FaSortDown
+                              color="grey"
+                              cursor="pointer"
+                              onClick={() => {
+                                const myData = []
+                                  .concat(variantList)
+                                  .sort((a, b) =>
+                                    b.variant.colorName > a.variant.colorName
+                                      ? 1
+                                      : -1
+                                  );
+                                setVariantList(myData);
+                              }}
+                            ></FaSortDown>
+                          </Col>
+                        </Row>
+                      </Container>
+                    </th>
+                    <th>
+                      <Container>
+                        <Row>
+                          <Col>Color Code</Col>
+                          <Col md="auto">
+                            <FaSortUp
+                              color="grey"
+                              cursor="pointer"
+                              onClick={() => {
+                                const myData = []
+                                  .concat(variantList)
+                                  .sort((a, b) =>
+                                    a.variant.colorCode > b.variant.colorCode
+                                      ? 1
+                                      : -1
+                                  );
+                                setVariantList(myData);
+                              }}
+                            ></FaSortUp>
+
+                            <FaSortDown
+                              color="grey"
+                              cursor="pointer"
+                              onClick={() => {
+                                const myData = []
+                                  .concat(variantList)
+                                  .sort((a, b) =>
+                                    b.variant.colorCode > a.variant.colorCode
+                                      ? 1
+                                      : -1
+                                  );
+                                setVariantList(myData);
+                              }}
+                            ></FaSortDown>
+                          </Col>
+                        </Row>
+                      </Container>
+                    </th>
+                    <th>
+                      <Container>
+                        <Row>
+                          <Col>Cost Price</Col>
+                          <Col md="auto">
+                            <FaSortUp
+                              color="grey"
+                              cursor="pointer"
+                              onClick={() => {
+                                const myData = []
+                                  .concat(variantList)
+                                  .sort((a, b) =>
+                                    a.variant.costPrice > b.variant.costPrice
+                                      ? 1
+                                      : -1
+                                  );
+                                setVariantList(myData);
+                              }}
+                            ></FaSortUp>
+
+                            <FaSortDown
+                              color="grey"
+                              cursor="pointer"
+                              onClick={() => {
+                                const myData = []
+                                  .concat(variantList)
+                                  .sort((a, b) =>
+                                    b.variant.costPrice > a.variant.costPrice
+                                      ? 1
+                                      : -1
+                                  );
+                                setVariantList(myData);
+                              }}
+                            ></FaSortDown>
+                          </Col>
+                        </Row>
+                      </Container>
+                    </th>
+                    <th>
+                      <Container>
+                        <Row>
+                          <Col>Selling Price</Col>
+                          <Col md="auto">
+                            <FaSortUp
+                              color="grey"
+                              cursor="pointer"
+                              onClick={() => {
+                                const myData = []
+                                  .concat(variantList)
+                                  .sort((a, b) =>
+                                    a.variant.sellingPrice >
+                                    b.variant.sellingPrice
+                                      ? 1
+                                      : -1
+                                  );
+                                setVariantList(myData);
+                              }}
+                            ></FaSortUp>
+
+                            <FaSortDown
+                              color="grey"
+                              cursor="pointer"
+                              onClick={() => {
+                                const myData = []
+                                  .concat(variantList)
+                                  .sort((a, b) =>
+                                    b.variant.sellingPrice >
+                                    a.variant.sellingPrice
+                                      ? 1
+                                      : -1
+                                  );
+                                setVariantList(myData);
+                              }}
+                            ></FaSortDown>
+                          </Col>
+                        </Row>
+                      </Container>
+                    </th>
+                    <th>
+                      <Container>
+                        <Row>
+                          <Col>Quantity</Col>
+                          <Col md="auto">
+                            <FaSortUp
+                              color="grey"
+                              cursor="pointer"
+                              onClick={() => {
+                                const myData = []
+                                  .concat(variantList)
+                                  .sort((a, b) =>
+                                    a.variant.quantity > b.variant.quantity
+                                      ? 1
+                                      : -1
+                                  );
+                                setVariantList(myData);
+                              }}
+                            ></FaSortUp>
+
+                            <FaSortDown
+                              color="grey"
+                              cursor="pointer"
+                              onClick={() => {
+                                const myData = []
+                                  .concat(variantList)
+                                  .sort((a, b) =>
+                                    b.variant.quantity > a.variant.quantity
+                                      ? 1
+                                      : -1
+                                  );
+                                setVariantList(myData);
+                              }}
+                            ></FaSortDown>
+                          </Col>
+                        </Row>
+                      </Container>
+                    </th>
+                    <th>
+                      <Container>Action</Container>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {variantList.map((doc, index) => (
                     <tr key={doc.id}>
                       <td>{index + 1}</td>
-                      <td>{doc.variant.size}</td>
-                      <td>{doc.variant.colorName}</td>
-                      <td>{doc.variant.colorCode}</td>
-                      <td>{doc.variant.costPrice}</td>
-                      <td>{doc.variant.sellingPrice}</td>
-                      <td>{doc.variant.quantity}</td>
                       <td>
-                        <Row className="justify-content-md-center">
-                          <Col xs="2">
-                            <FaPen
-                              size="1rem"
-                              color="green"
-                              cursor="pointer"
-                              onClick={() => {
-                                setEditModal(true);
+                        <Container>{doc.variant.size}</Container>
+                      </td>
+                      <td>
+                        {" "}
+                        <Container>{doc.variant.colorName}</Container>
+                      </td>
+                      <td>
+                        {" "}
+                        <Container>{doc.variant.colorCode}</Container>
+                      </td>
+                      <td>
+                        {" "}
+                        <Container>{doc.variant.costPrice}</Container>
+                      </td>
+                      <td>
+                        {" "}
+                        <Container>{doc.variant.sellingPrice}</Container>
+                      </td>
+                      <td>
+                        {" "}
+                        <Container>{doc.variant.quantity}</Container>
+                      </td>
+                      <td>
+                        <Container>
+                          <Row className="justify-content-md-center">
+                            <Col xs="2">
+                              <FaPen
+                                size="1rem"
+                                color="green"
+                                cursor="pointer"
+                                onClick={() => {
+                                  setEditModal(true);
 
-                                variantList.forEach((variant) => {
-                                  if (variant.id === doc.id) {
-                                    setVariant(variant);
-                                  }
-                                });
-                              }}
-                            ></FaPen>
-                          </Col>
-                          <Col xs="2">
-                            <FaTrash
-                              size="1rem"
-                              color="red"
-                              cursor="pointer"
-                              onClick={() => {
-                                setDeleteModal(true);
-                                variantList.forEach((variant) => {
-                                  if (variant.id === doc.id) {
-                                    setVariant(variant);
-                                  }
-                                });
-                              }}
-                            ></FaTrash>
-                          </Col>
-                        </Row>
+                                  variantList.forEach((variant) => {
+                                    if (variant.id === doc.id) {
+                                      setVariant(variant);
+                                    }
+                                  });
+                                }}
+                              ></FaPen>
+                            </Col>
+                            <Col xs="2">
+                              <FaTrash
+                                size="1rem"
+                                color="red"
+                                cursor="pointer"
+                                onClick={() => {
+                                  setDeleteModal(true);
+                                  variantList.forEach((variant) => {
+                                    if (variant.id === doc.id) {
+                                      setVariant(variant);
+                                    }
+                                  });
+                                }}
+                              ></FaTrash>
+                            </Col>
+                          </Row>
+                        </Container>
                       </td>
                     </tr>
                   ))}
